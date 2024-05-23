@@ -1,20 +1,19 @@
-# Do not change version. This is the version of aws buildspec, not the version of your buldspec file.
 version: 0.2
-
 phases:
   install:
     runtime-versions:
       nodejs: latest
     commands:
-      # Install project dependencies
       - node -v
       - npm i
-
+      
   build:
     commands:
-      # Build the react app
       - npm run build
-      #change the bucket name below in below command
       - aws s3 sync build/ s3://react-bukcet-yuks
-      #change the distribution-id below
-      - aws cloudfront create-invalidation --distribution-id E2LS173VEP3S7C --paths /* 
+      - aws cloudfront create-invalidation --distribution-id E2LS173VEP3S7C --paths /*
+      
+  artifacts: null
+  files:
+    - "**/*"
+  base-directory: build
