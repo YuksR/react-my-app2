@@ -1,19 +1,25 @@
 version: 0.2
+
 phases:
   install:
     runtime-versions:
       nodejs: latest
     commands:
+      # Install project dependencies
       - node -v
       - npm i
-      
+
   build:
     commands:
+      # Build the react app
       - npm run build
+      # Synchronize the build output with the S3 bucket
       - aws s3 sync build/ s3://react-bukcet-yuks
-      - aws cloudfront create-invalidation --distribution-id E2LS173VEP3S7C --paths /*
-      
-  artifacts: null
+      # Note: Ensure the distribution-id is used appropriately (e.g., for CloudFront invalidation)
+      # Uncomment and update the following line if you need to create a CloudFront invalidation
+      - aws cloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths "/*"
+
+artifacts:
   files:
-    - "**/*"
-  base-directory: build
+    - '**/*'
+  base-directory: 'build'
