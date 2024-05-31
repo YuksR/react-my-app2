@@ -13,11 +13,6 @@ phases:
     commands:
       # Build the react app
       - npm run build
-      # Synchronize the build output with the S3 bucket
-      - aws s3 sync build/ s3://new-bucket-yuks
-      # Note: Ensure the distribution-id is used appropriately (e.g., for CloudFront invalidation)
-      # Uncomment and update the following line if you need to create a CloudFront invalidation
-      - aws cloudfront create-invalidation --distribution-id E16P9SVENGF618 --paths "/*"
 
 artifacts:
   files:
